@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html>
 
 <head>
@@ -6,15 +6,32 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Comp 680 Project</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" media="screen" href="css/dropzone.css" />
 
 </head>
 
 <body>
-	<p>
-		<center>Work in progress for Comp 680</center>
-	</p>
-	<form action="" class="dropzone"></form>
+	<link rel="stylesheet" href="css/dropzone.css" />
+	<script src="js/dropzone.js"></script>
+
+	<div style="text-align:center">
+		<h2>Comp 680 - Spring 2018</h2>
+		</br>
+		<button id="clickable">Click me to select files</button>
+	</div>
+	<!--
+	Don't forget to give this container the dropzone-previews class 
+	so the previews are formatted correctly.
+	 -->
+	<div id="previews" class="dropzone-previews"></div>
+
+	<script>
+		new Dropzone(document.body, { // Make the whole body a dropzone
+			url: "/upload/url", // Set the url
+			previewsContainer: "#previews", // Define the container to display the previews
+			clickable: "#clickable" // Define the element that should be used as click trigger to select files.
+		});
+	</script>
+
 </body>
 <script src="js/dropzone.js"></script>
 
