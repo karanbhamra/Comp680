@@ -1,7 +1,5 @@
 plugins:
   - jekyll-redirect-from
 
-theme: jekyll-theme-slate
-
 redirect_to:
   - http://www.comp680.tk
