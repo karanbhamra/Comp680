@@ -1,5 +1,0 @@
-plugins:
-  - jekyll-redirect-from
-
-redirect_to:
-  - http://www.comp680.tk
