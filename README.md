@@ -1,18 +1,24 @@
-# Comp 680 - Spring Semester 2018
+# CSUN - Spring Semester 2018
 
-## Project Name - ProtoDoc
+# Project Name - ProtoDoc
 
-## TEAM 3
+## Comp 680 - Team 3
+Karan Bhamra <br/>
+Gerardo Rodriguez <br/>
+Ryan Vitacion
+
+## Comp 583 - Team 2
+Karan Bhamra <br/>
+Gerardo Rodriguez <br/>
+Ryan Vitacion <br/>
+Edgar Lopez-Garcia <br/>
+Hazim Rekab
 
 ## Summary
 This repository contains the source code for our project. <br/>
 Project website is located at [www.comp680.tk](http://www.comp680.tk) <br/>
-This project allows anyone to drag and drop a file to share one time with a person of their choosing.
+This project allows anyone to drag and drop a file to share a one time link with a person of their choosing.
 
-## Group Members
-Karan Bhamra <br/>
-Gerardo Rodriguez <br/>
-Ryan Vitacion
 
 
 ## Documentation
