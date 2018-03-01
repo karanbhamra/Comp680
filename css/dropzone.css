@@ -174,9 +174,9 @@
   box-sizing: border-box; }
 
 .dropzone {
-  min-height: 150px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  background: white;
+  min-height: 300px;
+  border: 5px dashed #999;
+  background: #333;
   padding: 20px 20px; }
   .dropzone.dz-clickable {
     cursor: pointer; }

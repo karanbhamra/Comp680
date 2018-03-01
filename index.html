@@ -1,44 +1,125 @@
-<!DOCTYPE html5>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Comp 680 Project</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+	<title>ProtoDoc - Spring 2018</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
+
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/basic.css" rel="stylesheet">
+	<link href="css/dropzone.css" rel="stylesheet">
+
 	<script>
 		// Detects if github pages website, and redirects it to the hosted project on aws s3
 		if (window.location.href == "https://karanbhamra.github.io/comp680/") {
-			window.location.href = "http://www.comp680.tk/";
+			//window.location.href = "http://www.comp680.tk/";
+			window.location.replace("http://comp680.tk");
 		}
 	</script>
 
 </head>
 
 <body>
-	<link rel="stylesheet" href="css/dropzone.css" />
+
+	<div class="site-wrapper">
+
+		<div class="site-wrapper-inner">
+
+			<div class="cover-container">
+
+				<div class="masthead clearfix">
+					<div class="inner">
+						<h1 class="masthead-brand">ProtoDoc</h1>
+						<nav>
+							<ul class="nav masthead-nav">
+								<li class="active">
+									<a href="http://www.comp680.tk">Home</a>
+								</li>
+								<li>
+									<a href="http://www.github.com/karanbhamra/Comp680">GitHub</a>
+								</li>
+								<li>
+									<a href="mailto:karandeep.bhamra.974@my.csun.edu">Contact</a>
+								</li>
+							</ul>
+						</nav>
+
+					</div>
+
+				</div>
+				<div class="inner cover">
+					<p>
+						<h2 class="cover-heading">
+							The
+							<em>simple</em> way to share documents.
+						</h2>
+						&nbsp;
+					</p>
+
+					<!-- dropzone form -->
+					<div id="dropzone">
+						<form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+
+							<div class="dz-message needsclick">
+								Drop files here or click to upload.
+								<br>
+								<span class="note needsclick">(This is just a demo dropzone. Selected files are
+									<strong>not</strong> yet actually uploaded.)</span>
+							</div>
+
+						</form>
+					</div>
+					<p>
+						&nbsp;
+					</p>
+					<p class="lead">
+						<button type="button" class="btn btn-lg btn-secondary" onclick="uploadFiles();">Upload</button>
+					</p>
+				</div>
+
+				<div class="mastfoot">
+					<div class="inner">
+						<p>
+							&copy; 2018
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	 crossorigin="anonymous"></script>
 	<script src="js/dropzone.js"></script>
 
-	<div style="text-align:center">
-		<h2>Comp 680 - Spring 2018</h2>
-		</br>
-		<button id="clickable">Click me to select files</button>
-	</div>
-	<!--
-	Don't forget to give this container the dropzone-previews class 
-	so the previews are formatted correctly.
-	 -->
-	<div id="previews" class="dropzone-previews"></div>
 
 	<script>
-		new Dropzone(document.body, { // Make the whole body a dropzone
-			url: "/upload/url", // Set the url
-			previewsContainer: "#previews", // Define the container to display the previews
-			clickable: "#clickable" // Define the element that should be used as click trigger to select files.
-		});
+		function uploadFiles() {
+			alert("Files uploaded!");
+		}
+
 	</script>
 
 </body>
-<script src="js/dropzone.js"></script>
 
 </html>
