@@ -1,6 +1,7 @@
 # CSUN - Spring Semester 2018
 
 # Project Name - ProtoDoc
+[![Build Status](https://travis-ci.org/karanbhamra/comp680.svg?branch=master)](https://travis-ci.org/karanbhamra/comp680)
 
 ## Comp 680 - Team 3
 Karan Bhamra <br/>
