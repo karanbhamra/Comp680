@@ -1,6 +1,13 @@
+language: java
+
+language: python
+python:
+  - "3.6"
+sudo:
+  - required
 install:
- - pip install html5validator
- 
+  - pip install html5validator
+
 script: html5validator
 
 notifications:
