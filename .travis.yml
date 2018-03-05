@@ -1,1 +1,7 @@
-script: phantomjs Custom%DragDrop/dragdrop.js
+install:
+ - pip install html5validator
+ 
+script: html5validator
+
+notifications:
+  slack: comp680boctor:8OXuyAwv1IOXRXcW48IE1Fex
