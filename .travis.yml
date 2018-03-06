@@ -13,7 +13,7 @@ deploy:
   access_key_id: AKIAI3Y3ZWPFYRIJSLEA
   secret_access_key:
     secure: KGomTfLMpsc/jgAlyOmWpZbYxmyag+cjb3ROkLUtZ0y3TjENpEgcQ3doX8jazVMS5NYWUpfqAhMiwXsNg6A4YH888xLUconDlv5xfnD+QvaGnAYwnBnrm18b4eAxYeDuiPpJs7wzs8kDi0ZOVhk5zZ6SLB2P9X+sxvMKplQva/DcHq2vNMah0uESyWiOl/VEkIESmROMSwpXtAsM7qzVZqBexCti9TMUrcy9e6mCkNK7C5nuNGfJ9xCrkHrG30By2JzvpQSqgdEuFroW9kCJnCWM1lL8EzeV4WSSg+svOE+LGB0wt3rbA5+fWnD7571q0s5OwRsHiyDLslnn4RP6qARpJwbtqZro+w5Yw+HFK+uufVBrsCwmr4cNQSbcnl8dD6rJ5zPChHvltQphKaiQbYZnHYv7WzFGS8mAL3SxzS0WoWCapT/725pyB2D1PYEnfgC/PzDK6CoKbixwaICK3hT3H1hNLzfJAF74COo7RycrHAYFDyGC8sYL4eq7Sypc2H0yG/1XFOhVmnqb69/DH+aSD8KUFKHgT/K563GqOfRgSUEZh/ou7zElTN24BSrUB/C7Di++3224MieTI0SLwKsNKEHkBZHm7K2d6sSC7Em2dRmxIT+uo6rCBFldd5MEELPOInVc7kBW9M6MW5VqgP4codJh9IpF5m8o9ou4R9c=
-  bucket: comp680.tk
+  bucket: "comp680.tk.s3.amazonaws.com"
   region: us-west-2
   acl: public_read
   on:
