@@ -9,8 +9,8 @@
 }
 
 .dropzone.dragover {
-	border-color: limegreen;
-	color: limegreen;
+	border-color: #4CAF50;
+	color: #4CAF50;
 }
 
 .btn-space {

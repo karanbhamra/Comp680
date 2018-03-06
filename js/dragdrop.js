@@ -11,7 +11,7 @@
 
 	AWS.config.credentials.get(function (err) {
 		if (err) alert(err);
-		console.log(AWS.config.credentials);
+		//console.log(AWS.config.credentials);
 	});
 
 	var bucketName = "comp680testfiles"; // Enter your bucket name
@@ -101,14 +101,24 @@
 			};
 
 			bucket.putObject(params, function (err, data) {
+
 				if (err) {
-					results.innerHTML = 'ERROR: ' + err;
+					console.log("ERROR: " + err);
 				} else {
-					listObjs();
+					console.log("Upload success.");
+                    fileurl = "https://s3-us-west-2.amazonaws.com/comp680testfiles/testing/" + filename;
+                    alert("File " + filename + " uploaded.\n" + "File can be accessed from: " + fileurl);
+					location.reload();
 				}
+				// if (err) {
+				// 	results.innerHTML = 'ERROR: ' + err;
+				// } else {
+				// 	listObjs();
+				// }
 			});
-			fileurl = "https://s3-us-west-2.amazonaws.com/comp680testfiles/testing/" + filename;
-			alert("File " + filename + " uploaded.\n" + "File can be accessed from: " + fileurl);
+			//fileurl = "https://s3-us-west-2.amazonaws.com/comp680testfiles/testing/" + filename;
+			//alert("File " + filename + " uploaded.\n" + "File can be accessed from: " + fileurl);
+			//location.reload();
 		});
 	}
 
