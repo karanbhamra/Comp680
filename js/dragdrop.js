@@ -1,6 +1,6 @@
 // create a closure that runs when window is loaded
 (function () {
-	console.log("Test");
+	//console.log("Test");
 
 	var dropzone = document.getElementById("dropzone");
 	AWS.config.region = 'us-west-2'; // 1. Enter your region
@@ -41,6 +41,20 @@
 		console.log(formData);
 		var uploadFile = formData.get('file');
 		filename = uploadFile.name;
+
+
+
+		let dropzone = document.getElementById("dropzone");
+
+		dropzone.innerHTML = '<img src="img/fileicon.png" />' + filename;
+
+
+		let button = document.getElementById("uploadButton");
+
+		button.classList.remove("btn-secondary");
+		button.classList.add("btn-success");
+		button.disabled = false;
+
 		// console.log(uploadFile.name);
 		// console.log(uploadFile.size);
 
@@ -85,8 +99,7 @@
 				}
 			});
 			fileurl = "https://s3-us-west-2.amazonaws.com/comp680testfiles/testing/" + filename;
-			alert("File " + filename + " uploaded.");
-			alert("File can be accesed from: " + fileurl);
+			alert("File " + filename + " uploaded.\n" + "File can be accessed from: " + fileurl);
 		});
 	}
 
@@ -102,6 +115,7 @@
 			alert("Only one file allowed.");
 		}
 		else {
+
 			prepareUpload(e.dataTransfer.files[0]);
 		}
 
