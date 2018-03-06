@@ -51,6 +51,15 @@
 
 		let button = document.getElementById("uploadButton");
 
+		let clearButton = document.getElementById("clearButton");
+
+
+		clearButton.classList.remove("btn-secondary");
+		clearButton.classList.add("btn-danger");
+		clearButton.disabled = false;
+
+
+
 		button.classList.remove("btn-secondary");
 		button.classList.add("btn-success");
 		button.disabled = false;
