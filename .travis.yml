@@ -12,3 +12,12 @@ script: html5validator
 
 notifications:
   slack: comp680boctor:8OXuyAwv1IOXRXcW48IE1Fex
+
+
+deploy:
+  provider: s3
+  access_key_id: "AKIAI3Y3ZWPFYRIJSLEA"
+  secret_access_key: "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"
+  bucket: "comp680.tk"
+  skip_cleanup: true
+  region: "us-west-2"

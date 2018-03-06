@@ -16,8 +16,8 @@
 	 crossorigin="anonymous">
 
 	<link href="css/main.css" rel="stylesheet">
-	<link href="css/basic.css" rel="stylesheet">
-	<link href="css/dropzone.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/dragdrop.css" />
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
 
 	<script>
 		// Detects if github pages website, and redirects it to the hosted project on aws s3
@@ -58,32 +58,18 @@
 
 				</div>
 				<div class="inner cover">
-					<!-- <p> -->
 					<h2 class="cover-heading">
 						The
 						<em>simple</em> way to share documents.
 					</h2>
-					&nbsp;
-					<!-- </p> -->
+					<br/>
 
-					<!-- dropzone form -->
-					<div id="dropzone">
-						<form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+					<div class="dropzone" id="dropzone">Drop files here or click to upload.</div>
 
-							<div class="dz-message needsclick">
-								Drop files here or click to upload.
-								<br>
-								<span class="note needsclick">(This is just a demo dropzone. Selected files are
-									<strong>not</strong> yet actually uploaded.)</span>
-							</div>
-
-						</form>
-					</div>
-					<p>
-						&nbsp;
-					</p>
 					<p class="lead">
-						<button type="button" class="btn btn-lg btn-secondary" onclick="uploadFiles();">Upload</button>
+						<br>
+						<br>
+						<button type="button" class="btn btn-lg btn-secondary" id="uploadButton">Upload</button>
 					</p>
 				</div>
 
@@ -110,15 +96,8 @@
 	 crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	 crossorigin="anonymous"></script>
-	<script src="js/dropzone.js"></script>
+	<script src="js/dragdrop.js"></script>
 
-
-	<script>
-		function uploadFiles() {
-			alert("Files uploaded!");
-		}
-
-	</script>
 
 </body>
 
