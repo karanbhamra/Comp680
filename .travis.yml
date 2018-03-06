@@ -9,6 +9,13 @@ script: html5validator
 notifications:
   slack: comp680boctor:8OXuyAwv1IOXRXcW48IE1Fex
 
-addons:
-  artifacts:
-    s3_region: "us-west-2" # defaults to "us-east-1"
+deploy:
+    provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: comp680.tk
+    endpoint: www.comp680.tk.s3-website-us-west-1.amazonaws.com
+    region: us-west-1
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
