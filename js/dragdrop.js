@@ -1,6 +1,5 @@
 // create a closure that runs when window is loaded
 (function () {
-    // console.log("Test");
 
     var dropzone = document.getElementById('dropzone')
     AWS.config.region = 'us-west-2' // 1. Enter your region
@@ -99,20 +98,13 @@
                     alert('File ' + filename + ' uploaded.\n' + 'File can be accessed from: ' + fileurl)
                     location.reload()
                 }
-                // if (err) {
-                // 	results.innerHTML = 'ERROR: ' + err;
-                // } else {
-                // 	listObjs();
-                // }
             })
-            // fileurl = "https://s3-us-west-2.amazonaws.com/comp680testfiles/testing/" + filename;
-            // alert("File " + filename + " uploaded.\n" + "File can be accessed from: " + fileurl);
-            // location.reload();
         })
     }
 
     let filebrowser = document.getElementById("fileBrowser")
 
+    document.getElementById('dropzone').onclick = () => filebrowser.click()
 
     filebrowser.addEventListener('change', function () {
 
@@ -138,14 +130,14 @@
         }
     }
 
-    // color it black
+    // color it with hover color
     dropzone.ondragover = function () {
         this.className = 'dropzone dragover'
 
         return false
     }
 
-    // color it back to gray
+    // color it back to default
     dropzone.ondragleave = function () {
         this.className = 'dropzone'
 
