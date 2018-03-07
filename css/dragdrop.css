@@ -16,3 +16,12 @@
 .btn-space {
 	margin-right: 50px;
 }
+
+#fileBrowser {
+    opacity: 0;
+    width: 100%;
+    height:100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
