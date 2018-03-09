@@ -60,6 +60,15 @@
 
     });
 
+    // ios specific to make upload work on mobile
+    filebrowser.addEventListener('blur', function () {
+
+        let fileList = this.files;
+        let file = fileList[0];
+        prepareUpload(file)
+
+    });
+
     // on drop send a list of files to upload func
     dropzone.ondrop = function (e) {
 
