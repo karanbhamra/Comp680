@@ -33,6 +33,16 @@
     let clearButton = document.getElementById('clearButton');
     let filebrowser = document.getElementById("fileBrowser");
 
+
+    /// If the user device is an iOS device, the app is not supported because Apple's implementation of FormData is incomplete
+
+    let iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+
+    if (iOS == true) {
+        alert("Apple iOS devices are not supported at this moment.");
+    }
+    ///
+
     // color dropzone with hover color
     dropzone.ondragover = function () {
         this.className = 'dropzone dragover';
@@ -56,16 +66,7 @@
 
         let fileList = this.files;
         let file = fileList[0];
-        prepareUpload(file)
-
-    });
-
-    // ios specific to make upload work on mobile
-    filebrowser.addEventListener('blur', function () {
-
-        let fileList = this.files;
-        let file = fileList[0];
-        prepareUpload(file)
+        prepareUpload(file);
 
     });
 
