@@ -33,16 +33,6 @@
     let clearButton = document.getElementById('clearButton');
     let filebrowser = document.getElementById("fileBrowser");
 
-
-    /// If the user device is an iOS device, the app is not supported because Apple's implementation of FormData is incomplete
-
-    let iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
-
-    if (iOS == true) {
-        alert("Apple iOS devices are not supported at this moment.");
-    }
-    ///
-
     // color dropzone with hover color
     dropzone.ondragover = function () {
         this.className = 'dropzone dragover';
