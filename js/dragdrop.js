@@ -21,6 +21,8 @@
     });
     ///////////////
 
+    let lambda = new AWS.Lambda();
+
     let filename;   // will hold the local file name
     let fileurl;    // will hold the temporary aws link to the file once uploaded
 
@@ -32,8 +34,7 @@
     let uploadButton = document.getElementById('uploadButton');
     let clearButton = document.getElementById('clearButton');
     let filebrowser = document.getElementById("fileBrowser");
-
-
+  
     /// If the user device is an iOS device, the app is not supported because Apple's implementation of FormData is incomplete
 
     let iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
@@ -156,18 +157,37 @@
                 ACL: 'public-read'
             };
 
+            //upload object to S3
             bucket.putObject(params, function (err, data) {
                 if (err) {
                     console.log('ERROR: ' + err);   // File failed to upload, log it to console
                 } else {
                     console.log('Upload success.'); // File was uploaded, display the link to user via an alert for now
-                    fileurl = AWS_FILE_LINK + filename;
-                    alert('File ' + filename + ' uploaded.\n' + 'File can be accessed from: ' + fileurl);
+                }
+            })
 
+            //params for lambda invocation
+            let createLink = {
+                FunctionName : 'createTempLink',
+                InvocationType : 'RequestResponse',
+                Payload : JSON.stringify({"s3bucket" : bucketName, "s3key" : filename }),
+                LogType : 'None'
+            };
+
+            //invoke lambda function for temporary link generation
+            lambda.invoke(createLink, function(error, data) {
+                if (error) {
+                    alert(error);
+                }
+                else {
+                    //parse result
+                    fileurl = JSON.parse(data.Payload).link;
+                    //pass link back to user
+                    alert(fileurl);
                     // reload the page to "clear" it after a sucessful upload
                     location.reload();
                 }
-            })
+            });
         })
     }
 }());
