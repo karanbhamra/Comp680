@@ -149,9 +149,11 @@
           console.log('ERROR: ' + err); // File failed to upload, log it to console
         } else {
           console.log('Upload success.'); // File was uploaded, display the link to user via an alert for now
+          alert('Uploaded');
         }
       });
 
+      // TODO: make this lambda work again
       //params for lambda invocation
       //   let createLink = {
       //     FunctionName: 'createTempLink',
