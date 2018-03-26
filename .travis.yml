@@ -3,9 +3,9 @@ python:
 - '3.6'
 sudo:
 - required
-install:
-- pip install html5validator
-script: html5validator
+# install:
+# - pip install html5validator
+# script: html5validator
 notifications:
   slack: comp680boctor:8OXuyAwv1IOXRXcW48IE1Fex
 
