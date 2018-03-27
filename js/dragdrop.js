@@ -1,5 +1,5 @@
 // create a closure that runs when window is loaded
-(function() {
+(function () {
   // AWS setup
   AWS.config.region = 'us-west-2'; // 1. Enter your region
 
@@ -7,7 +7,7 @@
     IdentityPoolId: 'us-west-2:bda72b98-1668-4af4-85a7-c168a69133b8', // 2. Enter your identity pool
   });
 
-  AWS.config.credentials.get(function(err) {
+  AWS.config.credentials.get(function (err) {
     if (err) alert(err);
     // console.log(AWS.config.credentials);
   });
@@ -26,7 +26,7 @@
   let fileurl; // will hold the temporary aws link to the file once uploaded
 
   const AWS_FILE_LINK = 'https://s3-us-west-2.amazonaws.com/comp680testfiles/';
-  const MAX_FILE_SIZE = 1.5 * 10 ** 7; // set to 15 MB
+  const MAX_FILE_SIZE = 1.5 * Math.pow(10, 7);//(10 ** 7); // set to 15 MB
   let VALID_FILE_TYPES = [
     'application/pdf',
     'text/plain',
@@ -40,14 +40,14 @@
   let filebrowser = document.getElementById('fileBrowser');
 
   // color dropzone with hover color
-  dropzone.ondragover = function() {
+  dropzone.ondragover = function () {
     this.className = 'dropzone dragover';
 
     return false;
   };
 
   // color dropzone back to default
-  dropzone.ondragleave = function() {
+  dropzone.ondragleave = function () {
     this.className = 'dropzone';
 
     return false;
@@ -57,14 +57,14 @@
   document.getElementById('dropzone').onclick = () => filebrowser.click();
 
   // if a file was selected via click in the dropzone, get the file and send it to be prepared
-  filebrowser.addEventListener('change', function() {
+  filebrowser.addEventListener('change', function () {
     let fileList = this.files;
     let file = fileList[0];
     prepareUpload(file);
   });
 
   // on drop send a list of files to upload func
-  dropzone.ondrop = function(e) {
+  dropzone.ondrop = function (e) {
     e.preventDefault(); // make sure any dropped object is not loaded and displayed
     this.className = 'dropzone';
 
@@ -95,6 +95,8 @@
     let uploadFile = formData.get('file');
 
     filename = uploadFile.name;
+
+
 
     let filesize = uploadFile.size;
 
@@ -131,11 +133,21 @@
     }
   }
 
+  // used to name upload filename  
+  function randomString() {
+    var x = 2147483648;
+    return Math.floor(Math.random() * x).toString(36) +
+      Math.abs(Math.floor(Math.random() * x) ^ Date.now()).toString(36);
+  }
+
   // Uploads the file to S3 bucket
   function uploadToS3(file) {
     // uploadButton's click will upload the file to S3 while setting the bucket file property to be public
-    uploadButton.addEventListener('click', function() {
-      var objKey = file.name;
+    uploadButton.addEventListener('click', function () {
+      //var objKey = file.name;
+      let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
+
+      var objKey = randomString() + extension;
       var params = {
         Key: objKey,
         ContentType: file.type,
@@ -144,7 +156,7 @@
       };
 
       //upload object to S3
-      bucket.putObject(params, function(err, data) {
+      bucket.putObject(params, function (err, data) {
         if (err) {
           console.log('ERROR: ' + err); // File failed to upload, log it to console
         } else {
