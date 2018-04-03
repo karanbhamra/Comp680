@@ -26,12 +26,14 @@ This project allows anyone to drag and drop a file to share a one time link with
 [Project SRS](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Project+SRS.pdf)<br/>
 
 ## Progress Reports
-[02/21/18](https://docs.google.com/spreadsheets/d/e/2PACX-1vRvd41YnLjxMRGGi8kIWwtu6DlGvliaDrZgPYiwDk1mPId3JUhCkLPMww9lsfpBZQJAmuSvLNZ8XYhD/pub?output=xlsx)
+[02/21/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+02_21_18.xlsx)
 
-[02/28/18](https://docs.google.com/spreadsheets/d/e/2PACX-1vS6P13OOj-WxPAA9_AdCImEttZdA4unyRx6Mr77_GvORItzE5bYROTS8hQ-AwhFJXKMqX4b7K7wXmPm/pub?output=xlsx)
+[02/28/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+02_28_18.xlsx)
 
-[03/07/18](https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_sQ_Z3VoPHL79dGvBQoqcg-kGYobEMn4c2fJpKULp4Rm-tkxKs9liiIMoTlz_6XexAWU0AP_zEFNA/pub?output=xlsx)
+[03/07/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+03_07_18.xlsx)
 
-[03/14/18](https://docs.google.com/spreadsheets/d/e/2PACX-1vTZLOvjXaiC8XEKjrW7SRwm_zAfzOjeG_Boj9roObrbuNwjQZsyjkctF8yIsWQPkSmgOrmGJdS_E1qw/pub?output=xlsx)
+[03/14/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+03_14_18.xlsx)
 
-[03/21/18](https://docs.google.com/spreadsheets/d/e/2PACX-1vSUz-ZoxbVgQtDsvlGnkfCbYUag8cwrztf0cr89LNO_HqIAwCGeMFKjCC3DifTiHyPsIDKkm5nvo1il/pub?output=xlsx)
+[03/21/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+03_21_18.xlsx)
+
+[03/28/18](https://s3-us-west-1.amazonaws.com/comp680.tk/files/Weekly+Report+03_28_18.xlsx)
