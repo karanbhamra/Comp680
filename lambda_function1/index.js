@@ -5,6 +5,8 @@ const fs = require('fs');
 const uuidv1 = require('uuid/v1');
 
 let s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+let docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+
 
 // Splits the key into its respective filename and extension
 function getFileInfo(key) {
@@ -35,17 +37,40 @@ function deleteOriginalFile(oldfile) {
     var params = {
         Bucket: 'comp680testfiles',
         Key: oldfile
-        /* where value for 'Key' equals 'pathName1/pathName2/.../pathNameN/fileName.ext' - full path name to your file without '/' at the beginning */
     };
     s3.deleteObject(params, function (err, data) {
         if (err) console.log(err, err.stack); // an error occurred
-        else console.log(data); // successful response
+        else console.log('File deleted successfully.'); // successful response
+    });
+}
+
+function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
+    var params = {
+        TableName: 'ProtoDoc',
+        Item: {
+            'uploaded_filename': uploadedFileName,
+            'secure_filename': newFileName,
+            'time_created': date,
+            'time_expire': -1,
+            'custom_expire': false,
+            'file_already_accessed': false
+        }
+    };
+
+    docClient.put(params, function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        }
+        else {
+            console.log("Success", data);
+        }
     });
 }
 
 exports.handler = function (event, context, callback) {
     // key is the S3 object that was uploaded
     var key = event.Records[0].s3.object.key;
+    console.log('original key:', key);
 
     // fileinfo object holds the filename and file extension
     let fileinfo = getFileInfo(key);
@@ -67,7 +92,10 @@ exports.handler = function (event, context, callback) {
         }
     };
 
-    deleteOriginalFile(key);
+    // write items to dB
+    writeInfoToDynamoDB(key, newfilename, Date.now());
 
-    callback(null, JSON.stringify(result));
+    // deleteOriginalFile(key);
+
+    callback(null, deleteOriginalFile(key));
 };
