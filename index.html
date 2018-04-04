@@ -1,121 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-        <title>ProtoDoc - Spring 2018</title>
+    <title>ProtoDoc - Spring 2018</title>
 
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 
-        <link href="css/main.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" media="screen" href="css/dragdrop.css" />
-        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.209.0.min.js"></script>
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/dragdrop.css" />
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.209.0.min.js"></script>
 
-        <script>
-            // Detects if github pages website, and redirects it to the hosted project on aws s3
-            if (window.location.href == "https://karanbhamra.github.io/comp680/") {
-                //window.location.href = "http://www.comp680.tk/";
-                window.location.replace("http://comp680.tk");
-            }
-        </script>
+    <script>
+        // Detects if github pages website, and redirects it to the hosted project on aws s3
+        if (window.location.href == "https://karanbhamra.github.io/comp680/") {
+            //window.location.href = "http://www.comp680.tk/";
+            window.location.replace("http://comp680.tk");
+        }
+    </script>
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div class="site-wrapper">
+    <div class="site-wrapper">
 
-            <div class="site-wrapper-inner">
+        <div class="site-wrapper-inner">
 
-                <div class="cover-container">
+            <div class="cover-container">
 
-                    <div class="masthead clearfix">
-                        <div class="inner">
-                            <h1 class="masthead-brand">ProtoDoc</h1>
-                            <nav>
-                                <ul class="nav masthead-nav">
-                                    <li class="active">
-                                        <a href="http://www.comp680.tk">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.github.com/karanbhamra/Comp680">GitHub</a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:karandeep.bhamra.974@my.csun.edu">Contact</a>
-                                    </li>
-                                </ul>
-                            </nav>
-
-                        </div>
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h1 class="masthead-brand">ProtoDoc</h1>
+                        <nav>
+                            <ul class="nav masthead-nav">
+                                <li class="active">
+                                    <a href="http://www.comp680.tk">Home</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.github.com/karanbhamra/Comp680">GitHub</a>
+                                </li>
+                                <li>
+                                    <a href="mailto:karandeep.bhamra.974@my.csun.edu">Contact</a>
+                                </li>
+                            </ul>
+                        </nav>
 
                     </div>
-                    <div class="inner cover">
-                        <h2 class="cover-heading">
-                            The
-                            <em>simple</em> way to share documents.
-                        </h2>
-                        <br/>
 
-                        <div class="dropzone" id="dropzone">
-                            <div class="droptext">
-                                Drop files here or click to upload.
+                </div>
+                <div class="inner cover">
+                    <h2 class="cover-heading">
+                        The
+                        <em>simple</em> way to share documents.
+                    </h2>
+                    <br/>
 
-                            </div>
-                            <input type="file" id="fileBrowser" />
+                    <div class="dropzone" id="dropzone">
+                        <div class="droptext">
+                            Drop files here or click to upload.
+
                         </div>
-                        <p id="info">
-                            Supported formats: PDF, TXT, DOC, RTF
-                            <br> Max Size: 15 MB
+                        <input type="file" id="fileBrowser" />
+                    </div>
+                    <p id="info">
+                        Supported formats: PDF, TXT, DOC, RTF<br>
+                        Max Size: 15 MB
+                    </p>
+                    <p class="lead">
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-lg btn-secondary btn-space" id="uploadButton" disabled>Upload</button>
+                        <button type="button" class="btn btn-lg btn-secondary" id="clearButton" onclick="location.reload();" disabled>Clear</button>
+                    </p>
+                </div>
+
+                <div class="mastfoot">
+                    <div class="inner">
+                        <p>
+                            &copy; 2018
                         </p>
-                        <p class="lead">
-
-                            <form id="fileValidTimeForm" class="hidden">
-                                <p id="validInfo">
-                                    File should be valid for:
-                                </p>
-                                <input type="radio" name="validTill" value="oneDay" checked> One Day
-                                <input type="radio" name="validTill" value="oneTime"> One Time
-                            </form>
-                            <button type="button" class="btn btn-lg btn-secondary btn-space hidden" id="uploadButton" disabled>Upload</button>
-                            <button type="button" class="btn btn-lg btn-secondary hidden" id="clearButton hidden" onclick="location.reload();" disabled>Clear</button>
-                        </p>
                     </div>
-
-                    <div class="mastfoot">
-                        <div class="inner">
-                            <p>
-                                &copy; 2018
-                            </p>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
 
         </div>
 
-        <!-- Bootstrap core JavaScript
+    </div>
+
+    <!-- Bootstrap core JavaScript
     ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-        <script src="js/FormData.js"></script>
-        <script src="js/dragdrop.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="js/FormData.js"></script>
+    <script src="js/dragdrop.js"></script>
 
 
-    </body>
+</body>
 
 </html>
