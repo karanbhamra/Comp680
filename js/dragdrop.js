@@ -178,10 +178,15 @@
 
                 // make the api call to set the expiration time
 
-                return setFileValidRequest(apiUrl);
+                //return setFileValidRequest(apiUrl);
+
+                return fetch(apiUrl, {
+                    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                });
 
             }).then(function(data){
                 console.log('Set file expire time successfully.');
+                console.log(data);
 
             }).catch(function (err) {
                 console.log('Error with promises', err);
