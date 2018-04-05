@@ -174,9 +174,10 @@
           xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
               console.log(this.responseText);
+              alert('Uploaded');
             }
           };
-          xhttp.open("PUT", `https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=${objKey}&validtill=24`, true);
+          xhttp.open("PUT", "https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=" + objKey + "&validtill=24", true);
           xhttp.send();
 
           // } else {
@@ -184,7 +185,7 @@
           // }
 
 
-          alert('Uploaded');
+
         }
       });
 
