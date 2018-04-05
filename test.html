@@ -34,7 +34,7 @@
 
                 let url = 'https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=hjhr8um52dsh.pdf&validtill=24';
 
-                loadDoc(url).then(function(data){
+                makeRequest(url).then(function(data){
                     console.log('Set file expire time successfully.');
                     console.log(data);
 
