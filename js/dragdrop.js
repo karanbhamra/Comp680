@@ -162,24 +162,25 @@
 
             putObjectPromise.then(function (data) {
 
-                console.log('Upload success.'); // File was uploaded
+                console.log('Upload success.', data); // File was uploaded
 
                 // make the api call to set the expiration time
 
-                var xhttp = new XMLHttpRequest();
+                //alert('Upload success');
 
+                return fetch(apiUrl, {
+                    method: "POST",
+                    mode:"cors",
 
-                // xhttp.onreadystatechange = function () {
-                //     if (this.readyState == 4 && this.status == 200) {
-                //         console.log(this.responseText);
-                //         alert('Uploaded');
-                //     }
-                // };
-                xhttp.open("PUT", "https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=" + objKey + "&validtill=24", false);
-                xhttp.send();
+                });
 
-                alert('Upload success');
+            }).then(function(response){
 
+                if (response.ok) {
+                    console.log('time expirated updated');
+                }else {
+                    console.log(response);
+                }
 
             }).catch(function (err) {
                 console.log('Error with promises', err);
