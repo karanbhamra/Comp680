@@ -139,18 +139,6 @@
             Math.abs(Math.floor(Math.random() * x) ^ Date.now()).toString(36);
     }
 
-    function setFileValidRequest(url) {
-        return new Promise(function (resolve, reject) {
-
-            let xhr = new XMLHttpRequest();
-            xhr.open('PUT', url);
-            xhr.onload = resolve;
-            xhr.onerror = reject;
-            xhr.send();
-
-        });
-    }
-
     // Uploads the file to S3 bucket
     function uploadToS3(file) {
         // uploadButton's click will upload the file to S3 while setting the bucket file property to be public
@@ -178,15 +166,18 @@
 
                 // make the api call to set the expiration time
 
-                //return setFileValidRequest(apiUrl);
+                var xhttp = new XMLHttpRequest();
 
-                return fetch(apiUrl, {
-                    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-                });
 
-            }).then(function(data){
-                console.log('Set file expire time successfully.');
-                console.log(data);
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        alert('Uploaded');
+                    }
+                };
+                xhttp.open("PUT", "https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=" + objKey + "&validtill=24", true);
+                xhttp.send();
+
 
             }).catch(function (err) {
                 console.log('Error with promises', err);
