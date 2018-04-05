@@ -146,6 +146,7 @@
             //var objKey = file.name;
             let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
 
+
             let objKey = randomString() + extension;
             let params = {
                 Key: objKey,
@@ -154,9 +155,16 @@
                 ACL: 'public-read',
             };
 
+            let lambdaParams = {
+                FunctionName: 'setFileValidTill',
+                InvocationType: 'RequestResponse',
+                Payload: JSON.stringify({filename: objKey, validtill: 24}),
+                LogType: 'None'
+            };
+
             //upload object to S3
 
-            let apiUrl = 'https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=' + objKey + '&validtill=24';
+            //let apiUrl = 'https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=' + objKey + '&validtill=24';
 
             let putObjectPromise = bucket.putObject(params).promise();
 
@@ -168,19 +176,17 @@
 
                 //alert('Upload success');
 
-                return fetch(apiUrl, {
-                    method: "POST",
-                    mode:"cors",
+                let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
 
-                });
+                return lambdaObjectPromise;
+
 
             }).then(function(response){
 
-                if (response.ok) {
-                    console.log('time expirated updated');
-                }else {
-                    console.log(response);
-                }
+                console.log('lambda invoked and expiration time set');
+                console.log(response);
+                alert('Upload success.');
+
 
             }).catch(function (err) {
                 console.log('Error with promises', err);
