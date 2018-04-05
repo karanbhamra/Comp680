@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
         <script src="main.js"></script>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.221.1.min.js"></script>
     </head>
 
     <body>
@@ -17,34 +18,69 @@
         </div>
 
         <script>
+            AWS.config.region = 'us-west-2'; // 1. Enter your region
 
-            function makeRequest(url) {
-                return fetch(url, {mode: "cors"});
-            }
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: 'us-west-2:bda72b98-1668-4af4-85a7-c168a69133b8', // 2. Enter your identity pool
+            });
+
+            AWS.config.credentials.get(function (err) {
+                if (err) alert(err);
+                // console.log(AWS.config.credentials);
+            });
+
+            let lambda = new AWS.Lambda();
+
 
             function loadDoc() {
-                // var xhttp = new XMLHttpRequest();
-                // xhttp.onreadystatechange = function () {
-                //     if (this.readyState == 4 && this.status == 200) {
-                //         console.log(this.responseText);
-                //     }
-                // };
-                // xhttp.open("PUT", "https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=y4vf3yfxzexy.pdf&validtill=1", true);
-                // xhttp.send();
 
-                let url = 'https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=hjhr8um52dsh.pdf&validtill=24';
+                let params = {
+                    FunctionName: 'setFileValidTill',
+                    InvocationType: 'RequestResponse',
+                    Payload: JSON.stringify({filename: 'cx0v9be56awk.pdf', validtill: 24}),
+                    LogType: 'None'
+                };
 
-                makeRequest(url).then(function(data){
-                    console.log('Set file expire time successfully.');
-                    console.log(data);
-
-                }).catch(function (err) {
-                    console.log('Error with promises', err);
-
+                lambda.invoke(params, function(error, data){
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(data);
+                    }
                 })
+
+                //params for lambda invocation
+                //   let createLink = {
+                //     FunctionName: 'createTempLink',
+                //     InvocationType: 'RequestResponse',
+                //     Payload: JSON.stringify({ s3bucket: bucketName, s3key: filename }),
+                //     LogType: 'None',
+                //   };
+
+                //   //invoke lambda function for temporary link generation
+                //   lambda.invoke(createLink, function(error, data) {
+                //     if (error) {
+                //       alert(error);
+                //     } else {
+                //       //parse result
+                //       fileurl = JSON.parse(data.Payload).link;
+                //       //pass link back to user
+                //       alert(fileurl);
+                //       // reload the page to "clear" it after a sucessful upload
+                //       location.reload();
+                //     }
+                //   });
+
             }
         </script>
 
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
     </body>
 
 </html>
