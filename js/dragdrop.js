@@ -161,6 +161,29 @@
           console.log('ERROR: ' + err); // File failed to upload, log it to console
         } else {
           console.log('Upload success.'); // File was uploaded, display the link to user via an alert for now
+
+          let oneDayRadio = document.getElementById('radioOneDay');
+          //console.log(oneDayRadio.checked);
+
+          var xhttp = new XMLHttpRequest();
+
+
+          //if (oneDayRadio.checked) {
+          console.log('Valid for 24 hours');
+
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+            }
+          };
+          xhttp.open("PUT", `https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=${objKey}&validtill=24`, true);
+          xhttp.send();
+
+          // } else {
+          //   console.log('Valid for 1 time');
+          // }
+
+
           alert('Uploaded');
         }
       });
