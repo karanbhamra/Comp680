@@ -176,9 +176,13 @@
 
                 //alert('Upload success');
 
-                let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
+                setTimeout(function() {
+                    let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
 
-                return lambdaObjectPromise;
+                    return lambdaObjectPromise;
+                }, 1000);
+
+
 
 
             }).then(function(response){
