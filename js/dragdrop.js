@@ -178,28 +178,28 @@
 
 
                 // less fails if invoked after 1 second
-                // setTimeout(function() {
-                //     let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
+                setTimeout(function() {
+                    let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
+
+                    return lambdaObjectPromise;
+                }, 2500);
+
                 //
-                //     return lambdaObjectPromise;
-                // }, 1000);
+                // lambda.invoke(lambdaParams, function (error, data) {
+                //     if (error) {
+                //         console.log('Error', error);
+                //     } else {
+                //         console.log('Data', data);
+                //         alert('Upload success');
+                //     }
+                // })
 
+            }).then(function(response){
 
-                lambda.invoke(lambdaParams, function (error, data) {
-                    if (error) {
-                        console.log('Error', error);
-                    } else {
-                        console.log('Data', data);
-                        alert('Upload success');
-                    }
-                })
+                console.log('lambda invoked and expiration time set');
+                console.log(response);
+                alert('Upload success.');
 
-            // }).then(function(response){
-            //
-            //     // console.log('lambda invoked and expiration time set');
-            //     // console.log(response);
-            //     // alert('Upload success.');
-            //
 
             }).catch(function (err) {
                 console.log('Error with promises', err);
