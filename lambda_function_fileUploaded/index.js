@@ -8,6 +8,10 @@ let s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 let docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 
 
+function convertHrToMs(hour) {
+    return hour * 3600000;
+}
+
 // Splits the key into its respective filename and extension
 function getFileInfo(key) {
     let file = key.substr(0, key.lastIndexOf('.'));
@@ -47,13 +51,25 @@ function deleteOriginalFile(oldfile) {
 function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
     // Load the AWS SDK for Node.js
     // Create the DynamoDB service object
+    let milliseconds = 0;
+
+    if (uploadedFileName.includes('day')) {
+
+        milliseconds = convertHrToMs(24);
+    } else {
+        milliseconds = convertHrToMs(1);
+    }
+
+
     var params = {
         TableName: 'ProtoDoc',
         Item: {
             'uploaded_filename': uploadedFileName,
             'secure_filename': newFileName,
             'time_created': date,
-            'time_expire' : -1
+            'time_expire' : date + milliseconds,
+            'custom_expire': false,
+            'file_already_accessed': false
         }
     };
 

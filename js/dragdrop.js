@@ -126,10 +126,7 @@
             dropzone.innerHTML = '<img src="img/fileicon.png" />' + filename; // add the doc image to the dropzone and append the filename
 
 
-            let radioOneDay = document.getElementById('radioOneDay');
-            let isValidForOneDay = radioOneDay.checked;
-
-            uploadToS3(uploadFile, isValidForOneDay);
+            uploadToS3(uploadFile);
         } else {
             alert('Check the file size and/or filetype.');
             location.reload();
@@ -144,15 +141,24 @@
     }
 
     // Uploads the file to S3 bucket
-    function uploadToS3(file, isValidForOneDay) {
+    function uploadToS3(file) {
         // uploadButton's click will upload the file to S3 while setting the bucket file property to be public
         uploadButton.addEventListener('click', function () {
             //var objKey = file.name;
             let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
 
+
+
+            let radioOneDay = document.getElementById('radioOneDay');
+
+            let isValidForOneDay = radioOneDay.checked;
+
+            console.log('radio one day selected', isValidForOneDay);
+            console.log('radio one hour selected', !isValidForOneDay);
+
             let prefix = "day";
 
-            if (!isValidForOneDay) {
+            if (isValidForOneDay == false) {
                 prefix = "hour";
             }
 
@@ -165,20 +171,30 @@
                 ACL: 'public-read',
             };
 
-            let lambdaParams = {
-                FunctionName: 'setFileValidTill',
-                InvocationType: 'RequestResponse',
-                Payload: JSON.stringify({filename: objKey, validtill: 24}),
-                LogType: 'None'
-            };
+            // let lambdaParams = {
+            //     FunctionName: 'setFileValidTill',
+            //     InvocationType: 'RequestResponse',
+            //     Payload: JSON.stringify({filename: objKey, validtill: 24}),
+            //     LogType: 'None'
+            // };
 
             //upload object to S3
+            console.log(objKey);
 
-            let putObjectPromise = bucket.putObject(params).promise();
+            bucket.putObject(params, function (err, data) {
+                if (err) {
+                    console.log('Error uploading file', err);
+                } else {
+                    console.log('File uploaded successfully.', data);
+                    alert('Success');
+                }
+            })
 
-            putObjectPromise.then(function (data) {
-
-                console.log('Upload success.', data); // File was uploaded
+            // let putObjectPromise = bucket.putObject(params).promise();
+            //
+            // putObjectPromise.then(function (data) {
+            //
+            //     console.log('Upload success.', data); // File was uploaded
 
                 // make the api call to set the expiration time
 
@@ -186,11 +202,11 @@
 
 
                 // less fails if invoked after 1 second
-                setTimeout(function() {
-                    let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
-
-                    return lambdaObjectPromise;
-                }, 2500);
+                // setTimeout(function() {
+                //     let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
+                //
+                //     return lambdaObjectPromise;
+                // }, 2500);
 
                 //
                 // lambda.invoke(lambdaParams, function (error, data) {
@@ -202,17 +218,17 @@
                 //     }
                 // })
 
-            }).then(function(response){
-
-                console.log('lambda invoked and expiration time set');
-                console.log(response);
-                alert('Upload success.');
-
-
-            }).catch(function (err) {
-                console.log('Error with promises', err);
-
-            })
+            // }).then(function(response){
+            //
+            //     console.log('lambda invoked and expiration time set');
+            //     console.log(response);
+            //     alert('Upload success.');
+            //
+            //
+            // }).catch(function (err) {
+            //     console.log('Error with promises', err);
+            //
+            // })
 
 
             // TODO: make this lambda work again
