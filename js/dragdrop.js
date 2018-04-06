@@ -125,7 +125,11 @@
 
             dropzone.innerHTML = '<img src="img/fileicon.png" />' + filename; // add the doc image to the dropzone and append the filename
 
-            uploadToS3(uploadFile);
+
+            let radioOneDay = document.getElementById('radioOneDay');
+            let isValidForOneDay = radioOneDay.checked;
+
+            uploadToS3(uploadFile, isValidForOneDay);
         } else {
             alert('Check the file size and/or filetype.');
             location.reload();
@@ -140,14 +144,20 @@
     }
 
     // Uploads the file to S3 bucket
-    function uploadToS3(file) {
+    function uploadToS3(file, isValidForOneDay) {
         // uploadButton's click will upload the file to S3 while setting the bucket file property to be public
         uploadButton.addEventListener('click', function () {
             //var objKey = file.name;
             let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
 
+            let prefix = "day";
 
-            let objKey = randomString() + extension;
+            if (!isValidForOneDay) {
+                prefix = "hour";
+            }
+
+
+            let objKey = prefix + randomString() + extension;
             let params = {
                 Key: objKey,
                 ContentType: file.type,
@@ -163,8 +173,6 @@
             };
 
             //upload object to S3
-
-            //let apiUrl = 'https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=' + objKey + '&validtill=24';
 
             let putObjectPromise = bucket.putObject(params).promise();
 
@@ -206,38 +214,6 @@
 
             })
 
-
-            // bucket.putObject(params, function (err, data) {
-            //     if (err) {
-            //         console.log('ERROR: ' + err); // File failed to upload, log it to console
-            //     } else {
-            //         console.log('Upload success.'); // File was uploaded, display the link to user via an alert for now
-            //
-            //         let oneDayRadio = document.getElementById('radioOneDay');
-            //         //console.log(oneDayRadio.checked);
-            //
-            //         var xhttp = new XMLHttpRequest();
-            //
-            //
-            //         //if (oneDayRadio.checked) {
-            //         console.log('Valid for 24 hours');
-            //
-            //         xhttp.onreadystatechange = function () {
-            //             if (this.readyState == 4 && this.status == 200) {
-            //                 console.log(this.responseText);
-            //                 alert('Uploaded');
-            //             }
-            //         };
-            //         xhttp.open("PUT", "https://co6yub84p6.execute-api.us-west-2.amazonaws.com/dev/setFileValidTill?filename=" + objKey + "&validtill=24", true);
-            //         xhttp.send();
-            //
-            //         // } else {
-            //         //   console.log('Valid for 1 time');
-            //         // }
-            //
-            //
-            //     }
-            // });
 
             // TODO: make this lambda work again
             //params for lambda invocation

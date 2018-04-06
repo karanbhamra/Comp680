@@ -53,9 +53,7 @@ function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
             'uploaded_filename': uploadedFileName,
             'secure_filename': newFileName,
             'time_created': date,
-            'time_expire' : -1,
-            'custom_expire': false,
-            'file_already_accessed': false
+            'time_expire' : -1
         }
     };
 
