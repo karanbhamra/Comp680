@@ -162,8 +162,8 @@
                 prefix = "hour";
             }
 
-
             let objKey = prefix + randomString() + extension;
+
             let params = {
                 Key: objKey,
                 ContentType: file.type,
@@ -171,65 +171,22 @@
                 ACL: 'public-read',
             };
 
-            // let lambdaParams = {
-            //     FunctionName: 'setFileValidTill',
-            //     InvocationType: 'RequestResponse',
-            //     Payload: JSON.stringify({filename: objKey, validtill: 24}),
-            //     LogType: 'None'
-            // };
-
             //upload object to S3
             console.log(objKey);
 
-            bucket.putObject(params, function (err, data) {
-                if (err) {
-                    console.log('Error uploading file', err);
-                } else {
-                    console.log('File uploaded successfully.', data);
-                    alert('Success');
-                }
-            })
+            let putObjectPromise = bucket.putObject(params).promise();
 
-            // let putObjectPromise = bucket.putObject(params).promise();
-            //
-            // putObjectPromise.then(function (data) {
-            //
-            //     console.log('Upload success.', data); // File was uploaded
+            putObjectPromise.then(function (data) {
 
-                // make the api call to set the expiration time
+                console.log('Upload success.', data); // File was uploaded
 
-                //alert('Upload success');
+                alert('Upload success');
 
 
-                // less fails if invoked after 1 second
-                // setTimeout(function() {
-                //     let lambdaObjectPromise = lambda.invoke(lambdaParams).promise();
-                //
-                //     return lambdaObjectPromise;
-                // }, 2500);
+             }).catch(function (err) {
+                 console.log('Failed to upload', err);
 
-                //
-                // lambda.invoke(lambdaParams, function (error, data) {
-                //     if (error) {
-                //         console.log('Error', error);
-                //     } else {
-                //         console.log('Data', data);
-                //         alert('Upload success');
-                //     }
-                // })
-
-            // }).then(function(response){
-            //
-            //     console.log('lambda invoked and expiration time set');
-            //     console.log(response);
-            //     alert('Upload success.');
-            //
-            //
-            // }).catch(function (err) {
-            //     console.log('Error with promises', err);
-            //
-            // })
-
+             })
 
             // TODO: make this lambda work again
             //params for lambda invocation
