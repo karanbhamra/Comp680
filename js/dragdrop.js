@@ -194,6 +194,7 @@
                         } else {
                             //parse result
                             let shortfileurl = JSON.parse(data.Payload).link;
+                            console.log(shortfileurl);
                             //pass link back to user
                             alert('Upload Success: ' + shortfileurl);
                             // reload the page to "clear" it after a sucessful upload
