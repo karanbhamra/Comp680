@@ -31,7 +31,7 @@ function renameFile(oldfile, newfile) {
         Key: newfile,
         ACL: 'public-read'
     };
-    s3.copyObject(params, function(err, data) {
+    s3.copyObject(params, function (err, data) {
         if (err) console.log(err, err.stack); // an error occurred
         else console.log(data); // successful response
     });
@@ -42,7 +42,7 @@ function deleteOriginalFile(oldfile) {
         Bucket: 'comp680testfiles',
         Key: oldfile
     };
-    s3.deleteObject(params, function(err, data) {
+    s3.deleteObject(params, function (err, data) {
         if (err) console.log(err, err.stack); // an error occurred
         else console.log('File deleted successfully.'); // successful response
     });
@@ -67,11 +67,11 @@ function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
             'uploaded_filename': uploadedFileName,
             'secure_filename': newFileName,
             'time_created': date,
-            'time_expire' : date + milliseconds
+            'time_expire': date + milliseconds
         }
     };
 
-    docClient.put(params, function(err, data) {
+    docClient.put(params, function (err, data) {
         if (err) {
             console.log("Error", err);
         }
@@ -81,7 +81,7 @@ function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
     });
 }
 
-exports.handler = function(event, context, callback) {
+exports.handler = function (event, context, callback) {
     // key is the S3 object that was uploaded
     var key = event.Records[0].s3.object.key;
     console.log('original key:', key);
