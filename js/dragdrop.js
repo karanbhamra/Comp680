@@ -174,7 +174,7 @@
             //upload object to S3
             console.log(objKey);
 
-            bucket.putObject(params, function (err, data) {
+            bucket.putObject(params, function (err, uploaddata) {
 
                 if (err) {
                     console.log('Failed to upload', err);
