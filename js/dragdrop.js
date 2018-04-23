@@ -193,9 +193,9 @@
                         alert(error);
                     } else {
                         //parse result
-                        fileurl = JSON.parse(data.Payload).link;
+                        let shortfileurl = JSON.parse(data.Payload).link;
                         //pass link back to user
-                        alert('Upload Success: ' + fileurl);
+                        alert('Upload Success: ' + shortfileurl);
                         // reload the page to "clear" it after a sucessful upload
                         location.reload();
                     }
