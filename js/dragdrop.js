@@ -180,6 +180,10 @@
                     console.log('Failed to upload', err);
                 } else {
 
+                    setTimeout(() => {
+                        // needed to delay results
+                    }, 2000);
+
                     let createLink = {
                         FunctionName: 'createTempLink',
                         InvocationType: 'RequestResponse',
@@ -193,7 +197,13 @@
                             alert(error);
                         } else {
                             //parse result
+                            setTimeout(() => {
+                                // needed to delay results
+                            }, 2000);
                             let shortfileurl = JSON.parse(data.Payload).link;
+                            setTimeout(() => {
+                                // needed to delay results
+                            }, 2000);
                             console.log(shortfileurl);
                             //pass link back to user
                             alert('Upload Success: ' + shortfileurl);
