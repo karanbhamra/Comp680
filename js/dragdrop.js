@@ -180,36 +180,31 @@
 
                 console.log('Upload success.', data); // File was uploaded
 
-                alert('Upload success');
+                let createLink = {
+                    FunctionName: 'createTempLink',
+                    InvocationType: 'RequestResponse',
+                    Payload: JSON.stringify({ s3key: objKey }),
+                    LogType: 'None',
+                };
 
+                //invoke lambda function for temporary link generation
+                lambda.invoke(createLink, function (error, data) {
+                    if (error) {
+                        alert(error);
+                    } else {
+                        //parse result
+                        fileurl = JSON.parse(data.Payload).link;
+                        //pass link back to user
+                        alert('Upload Success: ' + fileurl);
+                        // reload the page to "clear" it after a sucessful upload
+                        location.reload();
+                    }
+                });
 
-             }).catch(function (err) {
-                 console.log('Failed to upload', err);
+            }).catch(function (err) {
+                console.log('Failed to upload', err);
 
-             })
-
-            // TODO: make this lambda work again
-            //params for lambda invocation
-            //   let createLink = {
-            //     FunctionName: 'createTempLink',
-            //     InvocationType: 'RequestResponse',
-            //     Payload: JSON.stringify({ s3bucket: bucketName, s3key: filename }),
-            //     LogType: 'None',
-            //   };
-
-            //   //invoke lambda function for temporary link generation
-            //   lambda.invoke(createLink, function(error, data) {
-            //     if (error) {
-            //       alert(error);
-            //     } else {
-            //       //parse result
-            //       fileurl = JSON.parse(data.Payload).link;
-            //       //pass link back to user
-            //       alert(fileurl);
-            //       // reload the page to "clear" it after a sucessful upload
-            //       location.reload();
-            //     }
-            //   });
+            });
         });
     }
 })();
