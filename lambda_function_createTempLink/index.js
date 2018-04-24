@@ -17,43 +17,63 @@ exports.createTempLink = (event, context, callback) => {
         TableName: 'ProtoDoc',
     };
 
-    docClient.scan(dbParams, function (err, data) {
-        if (err) {
-            console.log('dynamodb error', err);
-        }
-        else {
-            for (let file of data.Items) {
-                if (file.uploaded_filename === ufilename) {
-                    let fname = file.secure_filename;
-                    let timemilli = file.time_expire - file.time_created;
-                    let validTimeInSeconds = convertMStoSec(timemilli);
+    let scanDBPromise = docClient.scan(dbParams).promise();
 
-                    console.log('found file in db called', file.secure_filename);
-                    console.log('filelink will be valid for', validTimeInSeconds);
+    scanDBPromise.then(function (data) {
 
+        let fname = '';
+        let timemilli = 0;
+        let validTimeInSeconds = 0;
 
-                    // gets the signed url to the file in s3 that will be valid for the duration user selected
-                    let signedUrl = s3.getSignedUrl('getObject', {
-                        Bucket: 'comp680testfiles',
-                        Key: fname,
-                        Expires: validTimeInSeconds,
-                    });
+        let found = false;
 
-                    console.log('signed url:', signedUrl);
+        for (let file of data.Items) {
+            if (file.uploaded_filename === ufilename) {
+                fname = file.secure_filename;
+                timemilli = file.time_expire - file.time_created;
+                validTimeInSeconds = convertMStoSec(timemilli);
 
-                    // get shortened URL
-                    tinyurl.shorten(signedUrl, function (shortenedUrl) {
+                console.log('found file in db called', file.secure_filename);
+                console.log('filelink will be valid for', validTimeInSeconds);
+                found = true;
+                break;
 
-                        console.log(shortenedUrl);
-
-                        // return the shortenedUrl as result to be given to user
-                        var result = { link: shortenedUrl };
-                        callback(null, result);
-
-                    });
-
-                }
             }
         }
+
+        if (!found) {
+            return callback('file not found in db', null);
+        }
+
+        let signedUrl = s3.getSignedUrl('getObject', {
+            Bucket: 'comp680testfiles',
+            Key: fname,
+            Expires: validTimeInSeconds,
+        });
+        console.log(signedUrl);
+
+        // get shortened URL
+        tinyurl.shorten(signedUrl, function (shortenedUrl) {
+
+            console.log(shortenedUrl);
+
+            // return the shortenedUrl as result to be given to user
+            // var result = { link: shortenedUrl };
+            var result = { link: shortenedUrl, securelink: signedUrl };
+
+            console.log('the result that will be returned', result);
+            callback(null, result);
+
+        });
+
+
+    }).catch(function (err) {
+        console.log('Failed to upload', err);
+
+        //let result = { link: 'error' };
+
+        callback(err, null);
+
     });
+
 };

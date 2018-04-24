@@ -23,20 +23,6 @@ function getFileInfo(key) {
     };
 }
 
-// Makes a copy of the uploaded file with the new filename which will be public
-function renameFile(oldfile, newfile) {
-    var params = {
-        Bucket: "comp680testfiles",
-        CopySource: "/comp680testfiles/" + oldfile,
-        Key: newfile,
-        ACL: 'public-read'
-    };
-    s3.copyObject(params, function (err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else console.log(data); // successful response
-    });
-}
-
 function deleteOriginalFile(oldfile) {
     var params = {
         Bucket: 'comp680testfiles',
@@ -45,39 +31,6 @@ function deleteOriginalFile(oldfile) {
     s3.deleteObject(params, function (err, data) {
         if (err) console.log(err, err.stack); // an error occurred
         else console.log('File deleted successfully.'); // successful response
-    });
-}
-
-function writeInfoToDynamoDB(uploadedFileName, newFileName, date) {
-    // Load the AWS SDK for Node.js
-    // Create the DynamoDB service object
-    let milliseconds = 0;
-
-    if (uploadedFileName.includes('day')) {
-
-        milliseconds = convertHrToMs(24);
-    } else {
-        milliseconds = convertHrToMs(1);
-    }
-
-
-    var params = {
-        TableName: 'ProtoDoc',
-        Item: {
-            'uploaded_filename': uploadedFileName,
-            'secure_filename': newFileName,
-            'time_created': date,
-            'time_expire': date + milliseconds
-        }
-    };
-
-    docClient.put(params, function (err, data) {
-        if (err) {
-            console.log("Error", err);
-        }
-        else {
-            console.log("Success", data);
-        }
     });
 }
 
@@ -91,25 +44,54 @@ exports.handler = function (event, context, callback) {
     let newfilename = uuidv1() + fileinfo.extension;
 
     // send the original object with the new objects filename
-    renameFile(key, newfilename);
-
-
-    let output = {
-        'oldfilename': key,
-        'newfilename': newfilename
+    var renameparams = {
+        Bucket: "comp680testfiles",
+        CopySource: "/comp680testfiles/" + key,
+        Key: newfilename,
+        ACL: 'public-read'
     };
 
-    let result = {
-        'status': 200,
-        'body': {
-            output
+    //rename file
+    let renamePromise = s3.copyObject(renameparams).promise();
+
+    renamePromise.then(function (data) {
+
+        // write items to db
+
+        let milliseconds = 0;
+
+        if (key.includes('day')) {
+
+            milliseconds = convertHrToMs(24);
         }
-    };
+        else {
+            milliseconds = convertHrToMs(1);
+        }
 
-    // write items to dB
-    writeInfoToDynamoDB(key, newfilename, Date.now());
+        var putparams = {
+            TableName: 'ProtoDoc',
+            Item: {
+                'uploaded_filename': key,
+                'secure_filename': newfilename,
+                'time_created': Date.now(),
+                'time_expire': Date.now() + milliseconds
+            }
+        };
 
-    // deleteOriginalFile(key);
+        return docClient.put(putparams).promise();
 
-    callback(null, deleteOriginalFile(key));
+    }).then(function (data) {
+        // delete original file
+
+        var deleteparams = {
+            Bucket: 'comp680testfiles',
+            Key: key
+        };
+        return s3.deleteObject(deleteparams).promise();
+
+    }).catch(function (err) {
+        callback(err, null);
+    });
+
+    callback(null, 'lambda finished success');
 }

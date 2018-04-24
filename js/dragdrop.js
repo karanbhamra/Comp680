@@ -171,148 +171,38 @@
                 ACL: 'public-read',
             };
 
-            //upload object to S3
-            console.log(objKey);
-
-            // bucket.putObject(params, function (err, uploaddata) {
-
-            //     if (err) {
-            //         console.log('Failed to upload', err);
-            //     } else {
-
-            //         setTimeout(() => {
-            //             // needed to delay results
-            //         }, 2000);
-
-            //         let createLink = {
-            //             FunctionName: 'createTempLink',
-            //             InvocationType: 'RequestResponse',
-            //             Payload: JSON.stringify({ s3key: objKey }),
-            //             LogType: 'None',
-            //         };
-
-            //         //invoke lambda function for temporary link generation
-            //         lambda.invoke(createLink, function (error, data) {
-            //             if (error) {
-            //                 alert(error);
-            //             } else {
-            //                 //parse result
-            //                 setTimeout(() => {
-            //                     // needed to delay results
-            //                 }, 2000);
-            //                 let shortfileurl = JSON.parse(data.Payload).link;
-            //                 setTimeout(() => {
-            //                     // needed to delay results
-            //                 }, 2000);
-            //                 console.log(shortfileurl);
-            //                 //pass link back to user
-            //                 alert('Upload Success: ' + shortfileurl);
-            //                 // reload the page to "clear" it after a sucessful upload
-            //                 location.reload();
-            //             }
-            //         });
-
-            //     }
-            // });
-
             let putObjectPromise = bucket.putObject(params).promise();
 
-            setTimeout(() => {
-                // add 4 sec delay to make sure lambda finishes running after upload
-                putObjectPromise.then(function (data) {
 
-                    console.log('Upload success.', data); // File was uploaded
+            putObjectPromise.then(function (data) {
 
-                    let createLink = {
-                        FunctionName: 'createTempLink',
-                        InvocationType: 'RequestResponse',
-                        Payload: JSON.stringify({ s3key: objKey }),
-                        LogType: 'None',
-                    };
+                console.log('Upload success.', data); // File was uploaded
 
-                    setTimeout(() => {
-                        // add 4 sec delay to make sure lambda finishes running after upload
-                    }, 4000);
+                let createLink = {
+                    FunctionName: 'createTempLink',
+                    InvocationType: 'RequestResponse',
+                    Payload: JSON.stringify({ s3key: objKey }),
+                    LogType: 'None',
+                };
 
-                    return lambda.invoke(createLink).promise();
+                return lambda.invoke(createLink).promise();
 
-                    //invoke lambda function for temporary link generation
-                    // lambda.invoke(createLink, function (error, data) {
-                    //     if (error) {
-                    //         alert(error);
-                    //     } else {
-                    //         //parse result
-                    //         let shortfileurl = JSON.parse(data.Payload).link;
-                    //         //pass link back to user
-                    //         alert('Upload Success: ' + shortfileurl);
-                    //         // reload the page to "clear" it after a sucessful upload
-                    //         location.reload();
-                    //     }
-                    // });
+            }).then(function (data) {
+                console.log('success in creating link promise');
+                //console.log(data);
+                //console.log(data.Payload);
+                let shortfileurl = JSON.parse(data.Payload).link;
+                console.log(shortfileurl);
+                //pass link back to user
+                alert('Upload Success: ' + shortfileurl);
+                // reload the page to "clear" it after a sucessful upload
+                location.reload();
 
-                }).then(function (data) {
-                    console.log('success in creating link promise');
-                    console.log(data);
-                    console.log(data.Payload);
-                    let shortfileurl = JSON.parse(data.Payload).link;
-                    console.log(shortfileurl);
-                    //pass link back to user
-                    //alert('Upload Success: ' + shortfileurl);
-                    // reload the page to "clear" it after a sucessful upload
-                    //location.reload();
+            }).catch(function (err) {
+                console.log('Failed to upload', err);
 
-                }).catch(function (err) {
-                    console.log('Failed to upload', err);
+            });
 
-                });
-            }, 5000);
-
-            // putObjectPromise.then(function (data) {
-
-            //     console.log('Upload success.', data); // File was uploaded
-
-            //     let createLink = {
-            //         FunctionName: 'createTempLink',
-            //         InvocationType: 'RequestResponse',
-            //         Payload: JSON.stringify({ s3key: objKey }),
-            //         LogType: 'None',
-            //     };
-
-            //     setTimeout(() => {
-            //         // add 4 sec delay to make sure lambda finishes running after upload
-            //     }, 4000);
-
-            //     return lambda.invoke(createLink).promise();
-
-            //     //invoke lambda function for temporary link generation
-            //     // lambda.invoke(createLink, function (error, data) {
-            //     //     if (error) {
-            //     //         alert(error);
-            //     //     } else {
-            //     //         //parse result
-            //     //         let shortfileurl = JSON.parse(data.Payload).link;
-            //     //         //pass link back to user
-            //     //         alert('Upload Success: ' + shortfileurl);
-            //     //         // reload the page to "clear" it after a sucessful upload
-            //     //         location.reload();
-            //     //     }
-            //     // });
-
-            // }).then(function (data) {
-            //     console.log('success in creating link promise');
-            //     console.log(data);
-            //     console.log(data.Payload);
-            //     let shortfileurl = JSON.parse(data.Payload).link;
-            //     console.log(shortfileurl);
-            //     //pass link back to user
-            //     //alert('Upload Success: ' + shortfileurl);
-            //     // reload the page to "clear" it after a sucessful upload
-            //     //location.reload();
-
-            // }).catch(function (err) {
-            //     console.log('Failed to upload', err);
-
-            // });
         });
     }
 })();
