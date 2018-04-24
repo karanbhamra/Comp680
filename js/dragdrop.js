@@ -250,11 +250,14 @@
 
             }).then(function (data) {
                 console.log('success in creating link promise');
+                console.log(data);
+                console.log(data.Payload);
                 let shortfileurl = JSON.parse(data.Payload).link;
+                console.log(shortfileurl);
                 //pass link back to user
-                alert('Upload Success: ' + shortfileurl);
+                //alert('Upload Success: ' + shortfileurl);
                 // reload the page to "clear" it after a sucessful upload
-                location.reload();
+                //location.reload();
 
             }).catch(function (err) {
                 console.log('Failed to upload', err);
