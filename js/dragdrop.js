@@ -185,7 +185,10 @@
                     LogType: 'None',
                 };
 
-                return lambda.invoke(createLink).promise();
+                setTimeout(() => {
+                    return lambda.invoke(createLink).promise(); // invoke lambda with delay to make sure file was created
+                }, 5000);
+                // return lambda.invoke(createLink).promise();
 
             }).then(function (data) {
                 console.log('success in creating link promise');
