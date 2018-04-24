@@ -217,6 +217,10 @@
 
             let putObjectPromise = bucket.putObject(params).promise();
 
+            setTimeout(() => {
+                // add 4 sec delay to make sure lambda finishes running after upload
+            }, 5000);
+
             putObjectPromise.then(function (data) {
 
                 console.log('Upload success.', data); // File was uploaded
