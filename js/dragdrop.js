@@ -176,30 +176,41 @@
 
             putObjectPromise.then(function (data) {
 
-                console.log('Upload success.', data); // File was uploaded
-
-                let createLink = {
-                    FunctionName: 'createTempLink',
-                    InvocationType: 'RequestResponse',
-                    Payload: JSON.stringify({ s3key: objKey }),
-                    LogType: 'None',
-                };
-
                 setTimeout(() => {
-                    return lambda.invoke(createLink).promise(); // invoke lambda with delay to make sure file was created
-                }, 5000);
-                // return lambda.invoke(createLink).promise();
 
-            }).then(function (data) {
-                console.log('success in creating link promise');
-                //console.log(data);
-                //console.log(data.Payload);
-                let shortfileurl = JSON.parse(data.Payload).link;
-                console.log(shortfileurl);
-                //pass link back to user
-                alert('Upload Success: ' + shortfileurl);
-                // reload the page to "clear" it after a sucessful upload
-                location.reload();
+                    console.log('Upload success.', data); // File was uploaded
+
+                    let createLinkParams = {
+                        FunctionName: 'createTempLink',
+                        InvocationType: 'RequestResponse',
+                        Payload: JSON.stringify({ s3key: objKey }),
+                        LogType: 'None',
+                    };
+
+
+                    lambda.invoke(createLinkParams, function (err, data) {
+                        if (err) {
+                            console.log('error invoking createlink function', err);
+                        } else {
+                            console.log('success in creating link promise');
+                            //console.log(data);
+                            //console.log(data.Payload);
+                            let shortfileurl = JSON.parse(data.Payload).link;
+                            let securefileurl = JSON.parse(data.Payload).securelink;
+                            console.log(shortfileurl);
+                            console.log(securefileurl);
+                            //pass link back to user
+                            alert('Upload Success: ' + shortfileurl);
+                            // reload the page to "clear" it after a sucessful upload
+                            location.reload();
+
+                        }
+
+                    }); // invoke lambda with delay to make sure file was created  
+
+                }, 5000);
+
+
 
             }).catch(function (err) {
                 console.log('Failed to upload', err);
