@@ -210,7 +210,7 @@
 
                             msg.show(["Upload Success", shortfileurl]);
                             // reload the page to "clear" it after a sucessful upload
-                            location.reload();
+                            //location.reload();
 
                         }
 
