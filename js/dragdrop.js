@@ -201,14 +201,6 @@
                             console.log(securefileurl);
                             //pass link back to user
                             //alert('Upload Success: ' + shortfileurl);
-                            let msg = Msg.factory(
-                                {
-                                    class: "green",
-                                    enable_titlebar: true,
-                                    persistent: false
-                                });
-
-                            msg.show(["Upload Success", shortfileurl]);
                             // reload the page to "clear" it after a sucessful upload
                             //location.reload();
 
