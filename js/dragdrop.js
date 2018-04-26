@@ -200,7 +200,7 @@
                             console.log(shortfileurl);
                             console.log(securefileurl);
                             //pass link back to user
-                            //alert('Upload Success: ' + shortfileurl);
+                            alert('Upload Success: ' + shortfileurl);
                             // reload the page to "clear" it after a sucessful upload
                             //location.reload();
 
