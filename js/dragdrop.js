@@ -24,6 +24,7 @@
     let dropzone = document.getElementById('dropzone');
     let modalButton = document.getElementById('modalButton');
     let dismissButton = document.getElementById('dismissButton');
+    let deleteDismissButton = document.getElementById('deleteDismissButton');
     let uploadButton = document.getElementById('uploadButton');
     let clearButton = document.getElementById('clearButton');
     let filebrowser = document.getElementById('fileBrowser');
@@ -45,6 +46,8 @@
     dismissButton.addEventListener('click', () => {
         location.reload();
     });
+
+    deleteDismissButton.addEventListener('click', () => dismissButton.click());
 
     // color dropzone with hover color
     dropzone.ondragover = function () {
@@ -75,8 +78,6 @@
         e.preventDefault(); // make sure any dropped object is not loaded and displayed
         this.className = 'dropzone';
 
-        // console.log(e.dataTransfer.files); // list of files dropped in the dropzone
-
         // prepare the file if its the only file
         if (e.dataTransfer.files.length > 1) {
             alert('Only one file allowed.');
@@ -102,7 +103,6 @@
         let uploadFile = formData.get('file');
 
         filename = uploadFile.name;
-
 
         let filesize = uploadFile.size;
 
@@ -150,7 +150,6 @@
     function uploadToS3(file) {
         // uploadButton's click will upload the file to S3 while setting the bucket file property to be public
         uploadButton.addEventListener('click', function () {
-            //var objKey = file.name;
             let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
 
             let radioOneDay = document.getElementById('radioOneDay');
@@ -200,8 +199,7 @@
                             console.log('error invoking createlink function', err);
                         } else {
                             console.log('success in creating link promise');
-                            //console.log(data);
-                            //console.log(data.Payload);
+
                             let shortfileurl = JSON.parse(data.Payload).link;
                             let securefileurl = JSON.parse(data.Payload).securelink;
                             console.log(shortfileurl);
@@ -211,17 +209,6 @@
                             let showUrl = document.getElementById('copy-input');
                             showUrl.value = shortfileurl;
 
-                            // let copyButton = document.getElementById('copy-button');
-
-                            // copyButton.addEventListener('click', () => {
-                            //     showUrl.select();
-
-                            //     /* Copy the text inside the text field */
-                            //     document.execCommand('copy');
-
-                            //     /* Alert the copied text */
-                            //     //alert("Copied the text: " + urlBox.value);
-                            // });
                             deleteFileButton.addEventListener('click', () => {
 
                                 let deleteFileParams = {
@@ -245,19 +232,12 @@
 
                             $('#uploadModal').modal('hide');
                             $('#myModal').modal('show');
-                            //modalButton.click();
-
-                            //alert('Upload Success: ' + shortfileurl);
-                            // reload the page to "clear" it after a sucessful upload
-                            //location.reload();
 
                         }
 
                     }); // invoke lambda with delay to make sure file was created  
 
                 }, 5000);
-
-
 
             }).catch(function (err) {
                 console.log('Failed to upload', err);
