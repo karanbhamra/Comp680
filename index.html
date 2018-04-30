@@ -22,7 +22,6 @@
         <script>
             // Detects if github pages website, and redirects it to the hosted project on aws s3
             if (window.location.href == "https://karanbhamra.github.io/comp680/") {
-                //window.location.href = "http://www.comp680.tk/";
                 window.location.replace("http://comp680.tk");
             }
         </script>
@@ -42,7 +41,7 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">ProtoDoc - Temporary Access Link</h4>
+                            <h4 class="modal-title">ProtoDoc - File Access Link</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -51,7 +50,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" value="http://google.com/" placeholder="Some path" id="copy-input">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="copy-button" data-toggle="tooltip" data-placement="button" title="Copy to Clipboard">
+                                    <button class="btn btn-success" type="button" id="copy-button" data-toggle="tooltip" data-placement="button" title="Copy to Clipboard">
                                         Copy
                                     </button>
                                 </span>

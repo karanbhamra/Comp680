@@ -21,6 +21,8 @@
     let lambda = new AWS.Lambda();
     ///////////////
 
+    let modalButton = document.getElementById('modalButton');
+
     let filename; // will hold the local file name
     let fileurl; // will hold the temporary aws link to the file once uploaded
 
@@ -199,7 +201,25 @@
                             console.log(shortfileurl);
                             console.log(securefileurl);
                             //pass link back to user
-                            alert('Upload Success: ' + shortfileurl);
+
+                            let showUrl = document.getElementById('copy-input');
+                            showUrl.value = shortfileurl;
+
+                            let copyButton = document.getElementById('copy-button');
+
+                            copyButton.addEventListener('click', () => {
+                                showUrl.select();
+
+                                /* Copy the text inside the text field */
+                                document.execCommand('copy');
+
+                                /* Alert the copied text */
+                                //alert("Copied the text: " + urlBox.value);
+                            });
+
+                            modalButton.click();
+
+                            //alert('Upload Success: ' + shortfileurl);
                             // reload the page to "clear" it after a sucessful upload
                             //location.reload();
 
