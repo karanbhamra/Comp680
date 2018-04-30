@@ -209,6 +209,9 @@
                             let showUrl = document.getElementById('copy-input');
                             showUrl.value = shortfileurl;
 
+                            $('#uploadModal').modal('hide');
+                            $('#myModal').modal('show');
+
                             deleteFileButton.addEventListener('click', () => {
 
                                 let deleteFileParams = {
@@ -224,14 +227,12 @@
                                         console.log('error invoking deletefile function', err);
                                     } else {
                                         console.log('file deleted');
+                                        $('#myModal').modal('hide');
                                         $('#deletedModal').modal('show');
                                     }
 
                                 });
                             });
-
-                            $('#uploadModal').modal('hide');
-                            $('#myModal').modal('show');
 
                         }
 
