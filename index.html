@@ -18,6 +18,7 @@
         <link href="css/main.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" media="screen" href="css/dragdrop.css" />
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.221.1.min.js"></script>
+        <script src="js/clipboard.min.js"></script>
 
         <script>
             // Detects if github pages website, and redirects it to the hosted project on aws s3
@@ -29,28 +30,47 @@
     </head>
 
     <body>
-        <!-- Modal shown when link is ready -->
+        <!-- Modal shown when uploading file and link is ready -->
         <div class="container">
             <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" id="modalButton"></button>
+            <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" id="modalButton"></button> -->
+            <div class="modal fade" id="uploadModal" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+
+                            <h4 class="modal-title">ProtoDoc - Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Uploading file and preparing link.
+                                <br/>Please wait.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
 
             <!-- The Modal -->
-            <div class="modal fade" id="myModal">
+            <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">ProtoDoc - File Access Link</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" id="dismissButton">&times;</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
                             <div class="input-group">
-                                <input type="text" class="form-control" value="http://google.com/" placeholder="Some path" id="copy-input">
+                                <input type="text" class="form-control" value="http://google.com/" id="copy-input">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button" id="copy-button" data-toggle="tooltip" data-placement="button" title="Copy to Clipboard">
+                                    <button class="btn btn-success" type="button" id="copy-button" data-clipboard-target="#copy-input" data-placement="button"
+                                        title="Copy to Clipboard">
                                         Copy
                                     </button>
                                 </span>
@@ -155,6 +175,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
         <script src="js/FormData.js"></script>
+        <!-- <script src="js/clipboard.min.js"></script> -->
         <script src="js/dragdrop.js"></script>
 
     </body>

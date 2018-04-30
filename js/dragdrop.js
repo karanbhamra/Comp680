@@ -21,7 +21,13 @@
     let lambda = new AWS.Lambda();
     ///////////////
 
+    new ClipboardJS('#copy-button');
+    let dropzone = document.getElementById('dropzone');
     let modalButton = document.getElementById('modalButton');
+    let dismissButton = document.getElementById('dismissButton');
+    let uploadButton = document.getElementById('uploadButton');
+    let clearButton = document.getElementById('clearButton');
+    let filebrowser = document.getElementById('fileBrowser');
 
     let filename; // will hold the local file name
     let fileurl; // will hold the temporary aws link to the file once uploaded
@@ -35,10 +41,11 @@
         'application/msword',
     ]; // initial list of valid mimetypes for files
 
-    let dropzone = document.getElementById('dropzone');
-    let uploadButton = document.getElementById('uploadButton');
-    let clearButton = document.getElementById('clearButton');
-    let filebrowser = document.getElementById('fileBrowser');
+
+    // dismissing link modal will reload the page to reset everything
+    dismissButton.addEventListener('click', () => {
+        location.reload();
+    });
 
     // color dropzone with hover color
     dropzone.ondragover = function () {
@@ -175,6 +182,9 @@
             let putObjectPromise = bucket.putObject(params).promise();
 
 
+            // display uploading Modal
+            $('#uploadModal').modal('show');
+
             putObjectPromise.then(function (data) {
 
                 setTimeout(() => {
@@ -205,19 +215,20 @@
                             let showUrl = document.getElementById('copy-input');
                             showUrl.value = shortfileurl;
 
-                            let copyButton = document.getElementById('copy-button');
+                            // let copyButton = document.getElementById('copy-button');
 
-                            copyButton.addEventListener('click', () => {
-                                showUrl.select();
+                            // copyButton.addEventListener('click', () => {
+                            //     showUrl.select();
 
-                                /* Copy the text inside the text field */
-                                document.execCommand('copy');
+                            //     /* Copy the text inside the text field */
+                            //     document.execCommand('copy');
 
-                                /* Alert the copied text */
-                                //alert("Copied the text: " + urlBox.value);
-                            });
-
-                            modalButton.click();
+                            //     /* Alert the copied text */
+                            //     //alert("Copied the text: " + urlBox.value);
+                            // });
+                            $('#uploadModal').modal('hide');
+                            $('#myModal').modal('show');
+                            //modalButton.click();
 
                             //alert('Upload Success: ' + shortfileurl);
                             // reload the page to "clear" it after a sucessful upload
