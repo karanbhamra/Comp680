@@ -9,7 +9,6 @@
 
     AWS.config.credentials.get(function (err) {
         if (err) alert(err);
-        // console.log(AWS.config.credentials);
     });
 
     let bucketName = 'comp680testfiles'; // Enter your bucket name
@@ -28,6 +27,7 @@
     let uploadButton = document.getElementById('uploadButton');
     let clearButton = document.getElementById('clearButton');
     let filebrowser = document.getElementById('fileBrowser');
+    let deleteFileButton = document.getElementById('deleteFileButton');
 
     let filename; // will hold the local file name
     let fileurl; // will hold the temporary aws link to the file once uploaded
@@ -40,7 +40,6 @@
         'application/rtf',
         'application/msword',
     ]; // initial list of valid mimetypes for files
-
 
     // dismissing link modal will reload the page to reset everything
     dismissButton.addEventListener('click', () => {
@@ -133,7 +132,6 @@
 
             dropzone.innerHTML = '<img src="img/fileicon.png" />' + filename; // add the doc image to the dropzone and append the filename
 
-
             uploadToS3(uploadFile);
         } else {
             alert('Check the file size and/or filetype.');
@@ -154,8 +152,6 @@
         uploadButton.addEventListener('click', function () {
             //var objKey = file.name;
             let extension = file.name.substr(file.name.lastIndexOf('.'), file.name.length);
-
-
 
             let radioOneDay = document.getElementById('radioOneDay');
 
@@ -226,6 +222,27 @@
                             //     /* Alert the copied text */
                             //     //alert("Copied the text: " + urlBox.value);
                             // });
+                            deleteFileButton.addEventListener('click', () => {
+
+                                let deleteFileParams = {
+                                    FunctionName: 'deleteFile',
+                                    InvocationType: 'Event',
+                                    Payload: JSON.stringify({ fileToDelete: objKey }),
+                                    LogType: 'None',
+                                };
+
+
+                                lambda.invoke(deleteFileParams, function (err, data) {
+                                    if (err) {
+                                        console.log('error invoking deletefile function', err);
+                                    } else {
+                                        console.log('file deleted');
+                                        $('#deletedModal').modal('show');
+                                    }
+
+                                });
+                            });
+
                             $('#uploadModal').modal('hide');
                             $('#myModal').modal('show');
                             //modalButton.click();
