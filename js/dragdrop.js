@@ -18,9 +18,8 @@
             Bucket: bucketName,
         },
     });
-    ///////////////
-
     let lambda = new AWS.Lambda();
+    ///////////////
 
     let filename; // will hold the local file name
     let fileurl; // will hold the temporary aws link to the file once uploaded

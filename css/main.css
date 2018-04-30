@@ -20,6 +20,36 @@ a:hover {
 }
 
 
+/* Modal stuff */
+
+#modalButton {
+  display: none;
+}
+
+.close {
+  color: #fff;
+}
+.close:hover {
+  color: #fff;
+}
+.modal-content {
+  background-color: #333;
+}
+
+.modal-dialog {
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.modal-body {
+  color: #fff;
+  background-color: #333;
+}
+
+.modal-title {
+  color: #fff;
+}
+
 /*
  * Base structure
  */
