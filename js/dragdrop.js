@@ -130,7 +130,13 @@
             uploadButton.classList.add('btn-success');
             uploadButton.disabled = false;
 
-            dropzone.innerHTML = '<img src="img/fileicon.png" />' + filename; // add the doc image to the dropzone and append the filename
+            // if filename is too long, add ellipses 
+            let displayfilename = filename;
+            if (filename.length > 20) {
+                displayfilename = displayfilename.substr(0, 17) + "...";
+            }
+
+            dropzone.innerHTML = '<img src="img/fileicon.png" />' + displayfilename; // add the doc image to the dropzone and append the filename
 
             uploadToS3(uploadFile);
         } else {
