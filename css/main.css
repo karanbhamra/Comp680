@@ -157,6 +157,10 @@ body {
  * Footer
  */
 
+.mastfoot {
+  color: #999; /* IE8 proofing */
+  color: rgba(255,255,255,.5);
+}
 
 
 /*
@@ -166,12 +170,10 @@ body {
 @media (min-width: 768px) {
   /* Pull out the header and footer */
   .masthead {
-    position: float;
-    top: 0;
+    position: top;
   }
   .mastfoot {
-    position: float;
-    bottom: 0;
+    position: bottom;
   }
   /* Start the vertical centering */
   .site-wrapper-inner {
